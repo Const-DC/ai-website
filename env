@@ -1,0 +1,12 @@
+# ─────────────────────────────────────────────────────────────
+# Neon PostgreSQL — used by Prisma at runtime (pooled connection)
+# ─────────────────────────────────────────────────────────────
+DATABASE_URL="postgresql://neondb_owner:npg_7oZIKYWzXkf0@ep-lively-night-a1jxyoq3-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
+
+# Direct connection — used by `prisma db push` / migrations (bypasses pooler)
+DIRECT_URL="postgresql://neondb_owner:npg_7oZIKYWzXkf0@ep-lively-night-a1jxyoq3.ap-southeast-1.aws.neon.tech/neondb?sslmode=require"
+
+# ─────────────────────────────────────────────────────────────
+# Admin password for your site
+# ─────────────────────────────────────────────────────────────
+ADMIN_PASSWORD="constjs2024admin!"

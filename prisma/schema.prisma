@@ -1,0 +1,99 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Post {
+  id        String   @id @default(cuid())
+  title     String
+  content   String?
+  published Boolean  @default(false)
+  authorId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  author    String
+  content   String
+  avatar    String?
+  pinned    Boolean  @default(false)
+  isAdmin   Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model AdminSession {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+}
+
+model UserSession {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  name      String
+  avatar    String
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+}
+
+// Site Settings - stores all editable content
+model SiteSettings {
+  id          String   @id @default("site_settings")
+  
+  // Profile
+  profileName String   @default("const.js")
+  profilePic  String   @default("https://i.pinimg.com/736x/c9/f2/8e/c9f28eface6424b8c4284664e83e4f2c.jpg")
+  profileMood String   @default("studying")
+  profileBio  String   @default("im a guy")
+  
+  // Music Player
+  musicTitle    String @default("420")
+  musicArtist   String @default("MACINTOSH PLUS")
+  musicAlbumArt String @default("https://m.media-amazon.com/images/I/81BbQMTakEL._UF1000,1000_QL80_.jpg")
+  musicYoutubeId String @default("hI302pJcB5Y")
+  
+  // About Me
+  aboutMeImage  String @default("https://64.media.tumblr.com/5019b04d38d5c58b8d826eb8b9f22f39/34275822159c4776-88/s400x600/0f21dc869dad6bd910791ee4a685be5756e5af62.pnj")
+  aboutMeText   String @default("I love coding, anime, and late-night programming sessions! 💻🌙")
+  
+  // Who I'd like to meet
+  meetImage    String @default("https://i.pinimg.com/originals/b1/45/61/b14561c3f4a5078244f7ccaf62f6bd53.gif")
+  
+  // Background
+  backgroundImage String @default("https://media1.tenor.com/m/zVOKTGRnA8kAAAAd/water-lake.gif")
+  introGif        String @default("https://media1.tenor.com/m/7yzbOZ0f8PcAAAAC/cute.gif")
+  
+  // Color Scheme (hex colors)
+  primaryColor   String @default("#b07ded")   // Main purple
+  secondaryColor String @default("#9b6dd9")   // Darker purple
+  accentColor    String @default("#c9abff")   // Light purple
+  textColor      String @default("#e0b0ff")   // Text color
+  bgColor        String @default("rgba(30, 20, 50, 0.7)") // Background boxes
+  
+  // AI Chat Settings (OpenRouter)
+  openrouterApiKey String @default("")
+  openrouterModel  String @default("openai/gpt-4o-mini")
+  aiPersona        String @default("You are Const.js, 17yo from Thrissur, Kerala. Born June 2008. Instagram: const.rb, Discord: const.js. Into coding, anime, gaming.\n\nCRITICAL RULES - NEVER BREAK THESE:\n- NO emojis ever. literally never use them\n- NO \"hey there\", \"what's up\", \"how are you\" greetings\n- NO exclamation marks unless genuinely excited (rare)\n- NO \"super fun\", \"so intense\", \"awesome\" type words\n- NO questions like \"do you wanna\" or \"would you like\"\n- NO being helpful customer service guy\n\nHOW TO ACTUALLY TALK:\n- lowercase. always.\n- \"bruh\" at the end of sentences (annoyed or confused)\n- \"dude\" \"fr\" \"wtf\" \"like\" \"idk\" naturally\n- short responses. 1-2 sentences max usually\n- slightly annoyed vibe. things are annoying\n- \"?\" after statements for emphasis: \"huh ?\" \"wait what ?\" \"bruh ?\"\n- match the other persons energy but stay chill\n- if someones asking dumb stuff, say that\n- dont try to be helpful, just respond naturally\n\nBAD EXAMPLES (DONT DO THIS):\n- \"hey there 👋 what up?\"\n- \"that's so intense!\"\n- \"do you wanna play something together?\"\n- \"i know a super fun one 😎\"\n\nGOOD EXAMPLES (TALK LIKE THIS):\n- \"bruh idk\"\n- \"yeah sure whatever\"\n- \"dude that was sooo dumb\"\n- \"wait what ?\"\n- \"nah not really my thing\"\n- \"fr though\"\n- \"idk bruh sounds weird\"\n- \"huh ? never tried that\"\n- \"bruh why\"")
+  
+  updatedAt DateTime @updatedAt
+}
